@@ -1,0 +1,45 @@
+# import ./util/multiple.py 
+import smtplib
+import random
+import string
+
+# Function to generate a 6-digit OTP
+def generate_otp():ṇ
+    otp = ''.join(random.choices(string.digits, k=6))
+    return otp
+
+# Function to send email with OTP
+def send_email(receiver_email, otp):
+    sender_email = "your_email@gmail.com"  # Update with your email
+    sender_password = "your_password"      # Update with your email password
+
+    message = f"Your OTP is: {otp}"
+
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login(sender_email, sender_password)
+    server.sendmail(sender_email, receiver_email, message)
+    server.quit()
+
+# Main function
+def main():
+    receiver_email = input("Enter your email address: ")
+    
+    # Generate OTP
+    otp = generate_otp()
+    print("OTP sent to your email.")
+
+    # Send OTP via email
+    send_email(receiver_email, otp)
+
+    # Prompt user to enter OTP
+    user_input_otp = input("Enter the OTP received in your email: ")
+
+    # Verify OTP
+    if user_input_otp == otp:
+        print("OTP verification successful!")
+    else:
+        print("Invalid OTP. Please try again.")
+
+if __name__ == "__main__":
+    main()
